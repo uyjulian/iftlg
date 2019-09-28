@@ -4,7 +4,7 @@ This plugin allows reading of TLG images in Susie plugin-compatible image viewer
 
 ## Building
 
-After cloning submodules, a simple `make` will generate `iftlg.spi`.
+A simple `make` will generate `iftlg.spi`.
 
 ## How to use
 
