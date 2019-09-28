@@ -132,8 +132,7 @@ int getBMPFromTLG(uint8_t *input_data, long file_size,
 }
 
 BOOL IsSupportedEx(char *filename, char *data) {
-	const char header[] = {'R', 'I', 'F', 'F', 0x00, 0x00, 0x00, 0x00,
-	                 'W', 'E', 'B', 'P', 'V',  'P',  '8'};
+	const char header[] = {'T', 'L', 'G'};
 	for (unsigned int i = 0; i < sizeof(header); i++) {
 		if (header[i] == 0x00)
 			continue;
