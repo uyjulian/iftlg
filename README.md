@@ -1,10 +1,10 @@
-# WebP Susie plugin
+# TLG Susie plugin
 
-This plugin allows reading of WebP images in Susie plugin-compatible image viewers.
+This plugin allows reading of TLG images in Susie plugin-compatible image viewers.
 
 ## Building
 
-After cloning submodules, a simple `make` will generate `ifwebp.spi`.
+After cloning submodules, a simple `make` will generate `iftlg.spi`.
 
 ## How to use
 
@@ -19,4 +19,4 @@ Susie plugins are compatile with many programs, including these:
 
 ## License
 
-This project is licensed under the MIT license. Please read the `LICENSE` file for more information.
+This project is licensed under a modified BSD license. Please read the `LICENSE` file for more information.
