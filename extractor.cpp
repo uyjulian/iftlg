@@ -89,7 +89,6 @@ static void *scanLineCallback(void *callbackdata, int y) {
 	return bmp_allinfo->bitmap_data + (bmp_allinfo->width * y * 4);
 }
 
-
 int getBMPFromTLG(uint8_t *input_data, long file_size,
                    BITMAPFILEHEADER *bitmap_file_header,
                    BITMAPINFOHEADER *bitmap_info_header, uint8_t **data) {
