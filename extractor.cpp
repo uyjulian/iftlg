@@ -10,7 +10,7 @@
 #include "extractor.h"
 #include <stdio.h>
 #include <string.h>
-#include <tlg.h>
+#include <TLG.h>
 
 const char *plugin_info[4] = {
     "00IN",
