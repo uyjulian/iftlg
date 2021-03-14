@@ -36,7 +36,7 @@ LDLIBS +=
 	@printf '\t%s %s\n' WINDRES $<
 	$(WINDRES) $(WINDRESFLAGS) $< $@
 
-LIBTLG_SOURCES += external/libtlg/LoadTLG.cpp external/libtlg/SaveTLG.cpp external/libtlg/TLG5Saver.cpp external/libtlg/TLG6Saver.cpp external/libtlg/handlestream.cpp external/libtlg/memstream.cpp external/libtlg/slide.cpp external/libtlg/stream.cpp external/libtlg/tvpgl.c
+LIBTLG_SOURCES += external/libtlg/LoadTLG.cpp external/libtlg/handlestream.cpp external/libtlg/memstream.cpp external/libtlg/slide.cpp external/libtlg/stream.cpp external/libtlg/tvpgl.c
 SOURCES := extractor.cpp spi00in.c iftlg.rc $(LIBTLG_SOURCES)
 OBJECTS := $(SOURCES:.c=.o)
 OBJECTS := $(OBJECTS:.cpp=.o)
