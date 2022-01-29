@@ -24,7 +24,7 @@ const int header_size = 64;
 class tMyStream : public tTJSBinaryStream
 {
 public:
-	tMyStream(uint8_t *buf, size_t size) : buf(buf), size(size), cur(0) {
+	tMyStream(const uint8_t *buf, size_t size) : buf(buf), size(size), cur(0) {
 	}
 
 	~tMyStream() {
@@ -66,7 +66,7 @@ public:
 	}
 
 private:
-	uint8_t *buf;
+	const uint8_t *buf;
 	size_t size;
 	size_t cur;
 };
@@ -89,7 +89,7 @@ static void *scanLineCallback(void *callbackdata, int y) {
 	return bmp_allinfo->bitmap_data + (bmp_allinfo->width * y * 4);
 }
 
-int getBMPFromTLG(uint8_t *input_data, long file_size,
+int getBMPFromTLG(const uint8_t *input_data, size_t file_size,
                    BITMAPFILEHEADER *bitmap_file_header,
                    BITMAPINFOHEADER *bitmap_info_header, uint8_t **data) {
 	tMyStream stream(input_data, file_size);
@@ -130,7 +130,7 @@ int getBMPFromTLG(uint8_t *input_data, long file_size,
 	return 0;
 }
 
-BOOL IsSupportedEx(char *filename, char *data) {
+BOOL IsSupportedEx(const char *data) {
 	const char header[] = {'T', 'L', 'G'};
 	for (unsigned int i = 0; i < sizeof(header); i++) {
 		if (header[i] == 0x00)
@@ -141,9 +141,9 @@ BOOL IsSupportedEx(char *filename, char *data) {
 	return TRUE;
 }
 
-int GetPictureInfoEx(long data_size, char *data,
-                     struct PictureInfo *picture_info) {
-	tMyStream stream((uint8_t *)data, data_size);
+int GetPictureInfoEx(size_t data_size, const char *data,
+                     SusiePictureInfo *picture_info) {
+	tMyStream stream((const uint8_t *)data, data_size);
 	int width, height;
 	TVPGetInfoTLG(&stream, &width, &height);
 
@@ -159,8 +159,8 @@ int GetPictureInfoEx(long data_size, char *data,
 	return SPI_ALL_RIGHT;
 }
 
-int GetPictureEx(long data_size, HANDLE *bitmap_info, HANDLE *bitmap_data,
-                 SPI_PROGRESS progress_callback, long user_data, char *data) {
+int GetPictureEx(size_t data_size, HANDLE *bitmap_info, HANDLE *bitmap_data,
+                 SPI_PROGRESS progress_callback, intptr_t user_data, const char *data) {
 	uint8_t *data_u8;
 	BITMAPINFOHEADER bitmap_info_header;
 	BITMAPFILEHEADER bitmap_file_header;
@@ -171,7 +171,7 @@ int GetPictureEx(long data_size, HANDLE *bitmap_info, HANDLE *bitmap_data,
 		if (progress_callback(1, 1, user_data))
 			return SPI_ABORT;
 
-	getBMPFromTLG((uint8_t *)data, data_size, &bitmap_file_header,
+	getBMPFromTLG((const uint8_t *)data, data_size, &bitmap_file_header,
 	               &bitmap_info_header, &data_u8);
 	*bitmap_info = LocalAlloc(LMEM_MOVEABLE, sizeof(BITMAPINFOHEADER));
 	*bitmap_data = LocalAlloc(LMEM_MOVEABLE, bitmap_file_header.bfSize -
