@@ -44,7 +44,7 @@ OBJECTS := $(OBJECTS:.rc=.o)
 
 BINARY ?= iftlg_unstripped.spi
 BINARY_STRIPPED ?= iftlg.spi
-ARCHIVE ?= iftlg.$(GIT_TAG).7z
+ARCHIVE ?= iftlg.7z
 
 all: $(BINARY_STRIPPED)
 
