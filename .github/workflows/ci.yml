@@ -44,7 +44,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: iftlg-win32
-          path: iftlg.*.7z
+          path: iftlg.7z
 
   create-release:
     needs: [build-win32]
