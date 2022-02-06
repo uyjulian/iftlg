@@ -13,7 +13,7 @@ A simple `make` will generate `iftlg.spi`.
 
 ## How to use
 
-Susie plugins are compatile with many programs, including these:
+Susie plugins are compatible with many programs, including these:
 
 - [A to B converter](http://www.asahi-net.or.jp/~KH4S-SMZ/spi/abc/index.html)
 - [Linar](http://hp.vector.co.jp/authors/VA015839/)
