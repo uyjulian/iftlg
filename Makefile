@@ -42,9 +42,8 @@ OBJECT_EXTENSION ?= .o
 endif
 OBJECT_EXTENSION ?= .$(TARGET_ARCH).o
 DEP_EXTENSION ?= .dep.make
-BUILD_DIR_EXTERNAL_NAME ?= build-$(TARGET_ARCH)
 export GIT_TAG := $(shell git describe --abbrev=0 --tags)
-INCFLAGS += -I. -I.. -Iexternal/libtlg
+INCFLAGS += -I. -I..
 ALLSRCFLAGS += $(INCFLAGS) -DGIT_TAG=\"$(GIT_TAG)\"
 OPTFLAGS := -O3
 ifeq (x$(TARGET_ARCH),xintel32)
@@ -72,6 +71,12 @@ WINDRESFLAGS += $(ALLSRCFLAGS) --codepage=65001
 LDFLAGS += $(OPTFLAGS) -static -static-libgcc -Wl,--kill-at -fPIC
 LDFLAGS_LIB += -shared
 LDLIBS +=
+
+DEPENDENCY_SOURCE_DIRECTORY := $(abspath build-source)
+DEPENDENCY_BUILD_DIRECTORY := $(abspath build-$(TARGET_ARCH))
+DEPENDENCY_OUTPUT_DIRECTORY := $(abspath build-libraries)-$(TARGET_ARCH)
+
+INCFLAGS += -I$(DEPENDENCY_OUTPUT_DIRECTORY)/include
 
 %$(OBJECT_EXTENSION): %.c
 	@printf '\t%s %s\n' CC $<
@@ -113,6 +118,8 @@ OBJECTS := $(OBJECTS:.rc=$(OBJECT_EXTENSION))
 DEPENDENCIES := $(OBJECTS:%$(OBJECT_EXTENSION)=%$(DEP_EXTENSION))
 EXTERNAL_LIBS :=
 
+INCFLAGS += -Iexternal/libtlg
+
 .PHONY:: all archive clean
 
 all: $(BINARY_STRIPPED)
@@ -121,6 +128,13 @@ archive: $(ARCHIVE)
 
 clean::
 	rm -f $(OBJECTS) $(OBJECTS_BIN) $(BINARY) $(BINARY_STRIPPED) $(ARCHIVE) $(DEPENDENCIES)
+	rm -rf $(DEPENDENCY_SOURCE_DIRECTORY) $(DEPENDENCY_BUILD_DIRECTORY) $(DEPENDENCY_OUTPUT_DIRECTORY)
+
+$(DEPENDENCY_SOURCE_DIRECTORY):
+	mkdir -p $@
+
+$(DEPENDENCY_OUTPUT_DIRECTORY):
+	mkdir -p $@
 
 $(ARCHIVE): $(BINARY_STRIPPED) $(EXTRA_DIST)
 	@printf '\t%s %s\n' 7Z $@
